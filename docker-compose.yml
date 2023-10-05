@@ -1,0 +1,77 @@
+version: "3"
+services:
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      - MYSQL_DATABASE=ums
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=devpass
+      - MYSQL_ROOT_PASSWORD=devpass
+    volumes:
+      - mariadata:/var/lib/mysql
+      - ~/docker/redis:/redis-service/logs
+    ports:
+      - "5000:3306"
+    networks:
+      - ums-back-office
+
+  redis:
+    image: redis:7.2.1
+    container_name: ums-redis
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - cache:/data
+    networks:
+      - ums-back-office
+  
+  frontend:
+    image: ums-frontend
+    build: ./frontend
+    networks:
+      - ums-user-facing
+  
+  backend:
+    image: ums-backend
+    build: ./backend
+    depends_on:
+      - mariadb
+      - redis
+    environment:
+      - UMS_DB_NAME=ums
+      - UMS_DB_USERNAME=dev
+      - UMS_DB_PASSWORD=devpass
+      - UMS_DB_PORT=3306
+      - UMS_DB_IP=mariadb
+      - REDIS_HOST=redis
+    networks:
+      - ums-user-facing
+      - ums-back-office
+    links:
+      - redis
+
+  proxy:
+    image: nginx:1.21
+    ports:
+      - "7887:80"
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - "./proxy/default.conf:/etc/nginx/conf.d/default.conf"
+    networks:
+      - ums-user-facing
+
+volumes:
+    mariadata:
+      driver: local
+    cache:
+      driver: local
+
+networks:
+  ums-user-facing:
+  ums-back-office:
