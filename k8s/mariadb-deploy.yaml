@@ -3,24 +3,24 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: frontend-deploy
-  name: frontend-deploy
+    app: mariadb-deployment
+  name: mariadb-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend-deploy
+      app: mariadb-deployment
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: frontend-deploy
+        app: mariadb-deployment
     spec:
       containers:
-      - image: ums-frontend
-        name: ums-frontend
+      - image: mariadb
+        name: mariadb
         ports:
-        - containerPort: 80
+        - containerPort: 3306
         resources: {}
 status: {}

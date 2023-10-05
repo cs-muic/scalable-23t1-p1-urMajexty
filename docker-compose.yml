@@ -48,6 +48,7 @@ services:
       - UMS_DB_PORT=3306
       - UMS_DB_IP=mariadb
       - REDIS_HOST=redis
+      - REDIS_PORT=6379
     networks:
       - ums-user-facing
       - ums-back-office

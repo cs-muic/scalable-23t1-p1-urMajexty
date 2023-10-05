@@ -3,24 +3,24 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: frontend-deploy
-  name: frontend-deploy
+    app: redis-deployment
+  name: redis-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend-deploy
+      app: redis-deployment
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: frontend-deploy
+        app: redis-deployment
     spec:
       containers:
-      - image: ums-frontend
-        name: ums-frontend
+      - image: redis
+        name: redis
         ports:
-        - containerPort: 80
+        - containerPort: 6379
         resources: {}
 status: {}
