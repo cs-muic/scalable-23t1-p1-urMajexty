@@ -1,15 +1,4 @@
-> Redis testing
-
-```
-redis-cli ping
-
-redis-cli --scan
-
-redis-cli --stat
-
-```
-
+> Final commit For some reason I coudnt use kubernetes even after troubleshooting 
 
 ghcr.io token
 > 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
-
