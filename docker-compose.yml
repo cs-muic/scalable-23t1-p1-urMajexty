@@ -11,15 +11,14 @@ services:
       - MYSQL_ROOT_PASSWORD=devpass
     volumes:
       - mariadata:/var/lib/mysql
-      - ~/docker/redis:/redis-service/logs
     ports:
-      - "5000:3306"
+      - "3000:3306"
     networks:
       - ums-back-office
 
   redis:
     image: redis:7.2.1
-    container_name: ums-redis
+    container_name: redis
     ports:
       - "6379:6379"
     environment:
@@ -54,11 +53,14 @@ services:
       - ums-back-office
     links:
       - redis
+    deploy:
+      mode: replicated
+      replicas: 3
 
   proxy:
     image: nginx:1.21
     ports:
-      - "7887:80"
+      - "8080:80"
     depends_on:
       - backend
       - frontend

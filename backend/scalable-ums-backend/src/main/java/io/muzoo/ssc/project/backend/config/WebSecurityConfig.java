@@ -21,10 +21,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+
 
 @Configuration
+@EnableRedisHttpSession
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Bean
+	public JedisConnectionFactory redisConnectionFactory() {
+		return new JedisConnectionFactory();
+	}
 
 	@Autowired
 	private OurUserDetailsService ourUserDetailsService;

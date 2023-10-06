@@ -10,3 +10,6 @@ redis-cli --stat
 ```
 
 
+ghcr.io token
+> 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
+

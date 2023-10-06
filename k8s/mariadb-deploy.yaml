@@ -1,26 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app: mariadb-deployment
-  name: mariadb-deployment
+  name: mariadb-deploy
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: mariadb-deployment
-  strategy: {}
+      app: mariadb
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: mariadb-deployment
+        app: mariadb
     spec:
       containers:
-      - image: mariadb
-        name: mariadb
+      - name: mariadb
+        image: mariadb
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: devpass  
+        - name: MYSQL_DATABASE
+          value: ums 
+        - name: MYSQL_USER
+          value: dev  
+        - name: MYSQL_PASSWORD
+          value: devpass  
         ports:
-        - containerPort: 3306
-        resources: {}
-status: {}
+        - containerPort: 3306  

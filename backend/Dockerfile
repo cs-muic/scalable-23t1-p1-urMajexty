@@ -13,5 +13,6 @@ ENV UMS_DB_PORT=3306
 ENV UMS_DB_IP=db
 
 ENV REDIS_HOST=redis
+ENV REDIS_PORT=6379
 
 CMD ["java", "-jar", "ums-1.0.jar"]
