@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-deployment
+  template:
+    metadata:
+      labels:
+        app: backend-deployment
+    spec:
+      containers:
+      # Push ums-backend to ghcr.io for this repo, github actions too
+      - image: ums-backend
+        name: ums-backend
+        env:
+        - UMS_DB_NAME=ums
+      - UMS_DB_USERNAME=dev
+      - UMS_DB_PASSWORD=devpass
+      - UMS_DB_PORT=3306
+      - UMS_DB_IP=mariadb
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+          - name: UMS_DB_NAME
+            value: ums
+          - name: UMS_DB_USERNAME
+            value: dev
+          - name: UMS_DB_PASSWORD
+            value: devpass
+          - name: UMS_DB_PORT
+            value: 3306
+          - name: UMS_DB_IP
+            value: mariadb
+          - name: REDIS_HOST
+            value: redis
+          - name: REDIS_PORT
+            value: 6379
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
